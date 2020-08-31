@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { signup } from "../auth";
 class Signup extends Component {
   state = {
     name: "",
@@ -18,17 +18,7 @@ class Signup extends Component {
     event.preventDefault();
     const { name, email, password } = this.state;
     const user = { name, email, password };
-    fetch(`http://localhost:4040/user/signup`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        return response.json();
-      })
+    signup(user)
       .then((data) => {
         if (data.error) {
           this.setState({ error: data.error });

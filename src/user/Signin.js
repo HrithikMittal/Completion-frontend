@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-
+import { login } from "../auth";
 class Signin extends Component {
   state = {
     email: "",
@@ -25,17 +25,7 @@ class Signin extends Component {
     event.preventDefault();
     const { email, password } = this.state;
     const user = { email, password };
-    fetch(`http://localhost:4040/user/login`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        return response.json();
-      })
+    login(user)
       .then((data) => {
         if (data.error) {
           this.setState({ error: data.error });
