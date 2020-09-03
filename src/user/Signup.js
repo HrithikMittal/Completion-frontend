@@ -54,7 +54,7 @@ class Signup extends Component {
           className="alert alert-info"
           style={{ display: this.state.open ? "" : "none" }}
         >
-          New Account is succesfully created. Please
+          New Account is succesfully created. Please{" "}
           <Link to="/signin">Sign In</Link>.
         </div>
 

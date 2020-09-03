@@ -101,3 +101,18 @@ export const remove = (userId) => {
     return response.json();
   });
 };
+
+export const update = (user, userId) => {
+  const token = isAuthenticated().token;
+  return fetch(`${process.env.REACT_APP_API_URL}/user/updateUser/${userId}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(user),
+  }).then((response) => {
+    return response.json();
+  });
+};
