@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 
-import { isAuthenticated } from "../auth";
+import { isAuthenticated, signout } from "../auth";
 
 const isActive = (history, path) => {
   if (history.location.pathname === path) {
@@ -9,21 +9,6 @@ const isActive = (history, path) => {
   } else {
     return { color: "#ffffff" };
   }
-};
-
-export const signout = (next) => {
-  if (typeof window !== "undefined") localStorage.removeItem("jwt");
-  next();
-  return fetch("http://localhost:4040/user/signout", {
-    method: "GET",
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then()
-    .catch((err) => {
-      console.log("Error", err);
-    });
 };
 
 const Menu = ({ history }) => {

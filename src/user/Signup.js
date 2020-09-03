@@ -32,7 +32,6 @@ class Signup extends Component {
             open: true,
           });
         }
-        console.log(data);
       })
       .catch((err) => {
         console.log("Error", err);

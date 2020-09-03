@@ -11,9 +11,7 @@ class AllUsers extends Component {
       .then((data) => {
         if (data.error) {
         }
-
         this.setState({ users: data });
-        console.log(data);
       })
       .catch((err) => {
         console.log(("error", err));

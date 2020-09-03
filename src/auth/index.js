@@ -67,3 +67,37 @@ export const getAllUsers = () => {
     return response.json();
   });
 };
+
+export const signout = (next) => {
+  const token = isAuthenticated().token;
+  if (typeof window !== "undefined") localStorage.removeItem("jwt");
+  next();
+  return fetch(`${process.env.REACT_APP_API_URL}/user/signout`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then()
+    .catch((err) => {
+      console.log("Error", err);
+    });
+};
+
+export const remove = (userId) => {
+  const token = isAuthenticated().token;
+  if (typeof window !== "undefined") localStorage.removeItem("jwt");
+  return fetch(`${process.env.REACT_APP_API_URL}/user/delUser/${userId}`, {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    return response.json();
+  });
+};
