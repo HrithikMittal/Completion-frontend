@@ -10,15 +10,16 @@ class EditProfile extends Component {
     password: "",
     error: "",
     redirectToProfile: false,
+    loading: false,
   };
 
   handleChange = (name) => (event) => {
-    this.setState({ error: "" });
-    this.setState({ [name]: event.target.value });
+    const value = name === "photo" ? event.target.files[0] : event.target.value;
+    this.userData.set(name, value);
+    this.setState({ [name]: value });
   };
 
-  componentDidMount() {
-    const userId = this.props.match.params.userId;
+  init(userId) {
     fetchProfile(userId)
       .then((data) => {
         if (data.error) {
@@ -32,12 +33,19 @@ class EditProfile extends Component {
       });
   }
 
+  componentDidMount() {
+    this.userData = new FormData();
+    const userId = this.props.match.params.userId;
+    this.init(userId);
+  }
+
   clickSubmit = (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     if (this.isValid()) {
-      const { name, email, password, id } = this.state;
-      const user = { name, email, password: password || undefined };
-      update(user, id)
+      const { id } = this.state;
+
+      update(id, this.userData)
         .then((data) => {
           if (data.error) {
             this.setState({ error: data.error });
@@ -91,7 +99,26 @@ class EditProfile extends Component {
             {this.state.error}
           </div>
         )}
+
+        {this.state.loading && (
+          <div
+            className="alert alert-primary"
+            style={{ display: this.state.error ? "" : "none" }}
+          >
+            <p>Loading</p>
+          </div>
+        )}
+
         <form>
+          <div className="form-group">
+            <lable className="text-muted">Profile Photo</lable>
+            <input
+              type="file"
+              className="form-control"
+              accept="image/*"
+              onChange={this.handleChange("photo")}
+            ></input>
+          </div>
           <div className="form-group">
             <lable className="text-muted">Name</lable>
             <input
