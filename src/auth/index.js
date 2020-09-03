@@ -1,5 +1,5 @@
 export const login = (user) => {
-  return fetch(`http://localhost:4040/user/login`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -12,7 +12,7 @@ export const login = (user) => {
 };
 
 export const signup = (user) => {
-  return fetch(`http://localhost:4040/user/signup`, {
+  return fetch(`${process.env.REACT_APP_API_URL}/user/signup`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -33,4 +33,24 @@ export const isAuthenticated = () => {
   } else {
     return false;
   }
+};
+
+export const authenticate = (jwt, next) => {
+  if (typeof window != undefined) {
+    localStorage.setItem("jwt", JSON.stringify(jwt));
+    next();
+  }
+};
+
+export const fetchProfile = (userId) => {
+  return fetch(`${process.env.REACT_APP_API_URL}/user/getUser/${userId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + isAuthenticated().token,
+    },
+  }).then((res) => {
+    return res.json();
+  });
 };

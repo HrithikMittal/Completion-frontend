@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { login } from "../auth";
+import { login, authenticate } from "../auth";
 class Signin extends Component {
   state = {
     email: "",
@@ -14,13 +14,6 @@ class Signin extends Component {
     this.setState({ [name]: event.target.value });
   };
 
-  authenticate = (jwt, next) => {
-    if (typeof window != undefined) {
-      localStorage.setItem("jwt", JSON.stringify(jwt));
-      next();
-    }
-  };
-
   clickSubmit = (event) => {
     event.preventDefault();
     const { email, password } = this.state;
@@ -30,7 +23,7 @@ class Signin extends Component {
         if (data.error) {
           this.setState({ error: data.error });
         } else {
-          this.authenticate(data, () => {
+          authenticate(data, () => {
             this.setState({
               error: "",
               email: "",
