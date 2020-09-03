@@ -54,3 +54,16 @@ export const fetchProfile = (userId) => {
     return res.json();
   });
 };
+
+export const getAllUsers = () => {
+  return fetch(`${process.env.REACT_APP_API_URL}/user/allUsers`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${isAuthenticated().token}`,
+    },
+  }).then((response) => {
+    return response.json();
+  });
+};

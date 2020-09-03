@@ -91,11 +91,8 @@ const Menu = ({ history }) => {
             <li className="nav-item">
               <Link
                 className="nav-link disabled"
-                style={isActive(
-                  history,
-                  `/user/${isAuthenticated().userRes._id}`
-                )}
-                to={`/user/${isAuthenticated().userRes._id}`}
+                style={isActive(history, `/allusers`)}
+                to={`/allusers`}
               >
                 All Users
               </Link>
