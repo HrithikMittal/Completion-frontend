@@ -145,3 +145,17 @@ export const unfollow = (userId, followId) => {
     return response.json();
   });
 };
+
+export const findPeople = (userId) => {
+  const token = isAuthenticated().token;
+  return fetch(`${process.env.REACT_APP_API_URL}/user/findpeople/${userId}`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    return response.json();
+  });
+};

@@ -4,6 +4,7 @@ import { Redirect, Link } from "react-router-dom";
 import DefaultProfile from "../images/avatar.png";
 import DeleteUser from "./DeleteUser";
 import FollowProfileButton from "./FollowProfileButton";
+import ProfileTabs from "./ProfileTabs";
 
 class Profile extends Component {
   state = {
@@ -117,6 +118,17 @@ class Profile extends Component {
                 onButtonClick={this.clickFollowButton}
               />
             )}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col md-12 mt-5 mb-5">
+            <hr />
+            <p className="lead">{this.state.user.about}</p>
+            <hr />
+            <ProfileTabs
+              followers={this.state.user.followers}
+              following={this.state.user.following}
+            ></ProfileTabs>
           </div>
         </div>
       </div>
