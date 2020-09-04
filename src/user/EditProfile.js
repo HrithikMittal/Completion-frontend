@@ -81,7 +81,7 @@ class EditProfile extends Component {
   };
 
   isValid = () => {
-    const { name, email, password, fileSize, about } = this.state;
+    const { name, email, password, fileSize } = this.state;
     if (name.length === 0) {
       this.setState({ error: "Name is required" });
       return false;

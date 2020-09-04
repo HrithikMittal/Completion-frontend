@@ -3,11 +3,21 @@ import { fetchProfile, isAuthenticated } from "../auth";
 import { Redirect, Link } from "react-router-dom";
 import DefaultProfile from "../images/avatar.png";
 import DeleteUser from "./DeleteUser";
+import FollowProfileButton from "./FollowProfileButton";
 
 class Profile extends Component {
   state = {
-    user: "",
+    user: { following: [], followers: [] },
     redirectToSignin: false,
+    following: false,
+  };
+
+  checkFollow = (user) => {
+    const jwt = isAuthenticated();
+    const match = user.followers.find((follower) => {
+      return follower._id === jwt.userRes._id;
+    });
+    return match;
   };
 
   componentDidMount() {
@@ -18,7 +28,8 @@ class Profile extends Component {
           this.setState({ redirectToSignin: true });
           console.log("ERROR is ", data.error);
         } else {
-          this.setState({ user: data });
+          let following = this.checkFollow(data);
+          this.setState({ user: data, following });
         }
       })
       .catch((err) => {
@@ -78,17 +89,19 @@ class Profile extends Component {
               <p>About me: {this.state.user.about}</p>
             </div>
             {isAuthenticated().userRes &&
-              isAuthenticated().userRes._id === this.state.user._id && (
-                <div className="d-inline-block mt-5">
-                  <Link
-                    className="btn btn-raised btn-success mr-5"
-                    to={`/user/edit/${this.state.user._id}`}
-                  >
-                    Edit Profile
-                  </Link>
-                  <DeleteUser userId={this.state.user._id} />
-                </div>
-              )}
+            isAuthenticated().userRes._id === this.state.user._id ? (
+              <div className="d-inline-block mt-5">
+                <Link
+                  className="btn btn-raised btn-success mr-5"
+                  to={`/user/edit/${this.state.user._id}`}
+                >
+                  Edit Profile
+                </Link>
+                <DeleteUser userId={this.state.user._id} />
+              </div>
+            ) : (
+              <FollowProfileButton following={this.state.following} />
+            )}
           </div>
         </div>
       </div>
