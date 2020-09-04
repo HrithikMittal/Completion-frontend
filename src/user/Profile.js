@@ -46,6 +46,12 @@ class Profile extends Component {
 
   render() {
     const redirectToSignin = this.state.redirectToSignin;
+    var photoUrl = this.state.user._id
+      ? `${process.env.REACT_APP_API_URL}/user/photo/${
+          this.state.user._id
+        }?${new Date().getTime()}`
+      : DefaultProfile;
+
     if (redirectToSignin) {
       return <Redirect to="/signup"></Redirect>;
     }
@@ -56,8 +62,9 @@ class Profile extends Component {
           <div className="col-md-6">
             <img
               className="card-img-top"
-              src={DefaultProfile}
+              src={photoUrl}
               alt={this.state.user.name}
+              onError={(i) => (i.target.src = `${DefaultProfile}`)}
               style={{ width: "100%", height: "15vw", objectFit: "hover" }}
             />
           </div>

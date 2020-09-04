@@ -23,12 +23,19 @@ class AllUsers extends Component {
       <div className="row">
         {users.map((user, i) => {
           const url = `/user/${user._id}`;
+          var photoUrl = user._id
+            ? `${process.env.REACT_APP_API_URL}/user/photo/${
+                user._id
+              }?${new Date().getTime()}`
+            : DefaultProfile;
+
           return (
             <div className="card col-md-4" key={user._id}>
               <img
                 className="card-img-top"
-                src={DefaultProfile}
+                src={photoUrl}
                 alt={user.name}
+                onError={(i) => (i.target.src = `${DefaultProfile}`)}
                 style={{ width: "100%", height: "12vw", objectFit: "hover" }}
               />
               <div className="card-body">

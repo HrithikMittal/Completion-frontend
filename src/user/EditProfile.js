@@ -96,7 +96,9 @@ class EditProfile extends Component {
     }
 
     var photoUrl = this.state.id
-      ? `${process.env.REACT_APP_API_URL}/user/photo/${this.state.id}`
+      ? `${process.env.REACT_APP_API_URL}/user/photo/${
+          this.state.id
+        }?${new Date().getTime()}`
       : DefaultProfile;
 
     return (
@@ -120,7 +122,13 @@ class EditProfile extends Component {
             <p>Loading</p>
           </div>
         )}
-        <img src={photoUrl} alt={this.state.name} />
+        <img
+          style={{ height: "200px", width: "auto" }}
+          className="img-thumbnail"
+          src={photoUrl}
+          onError={(i) => (i.target.src = `${DefaultProfile}`)}
+          alt={this.state.name}
+        />
 
         <form>
           <div className="form-group">
