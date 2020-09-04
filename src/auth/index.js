@@ -104,7 +104,6 @@ export const remove = (userId) => {
 
 export const update = (userId, user) => {
   const token = isAuthenticated().token;
-  console.log(user);
   return fetch(`${process.env.REACT_APP_API_URL}/user/updateUser/${userId}`, {
     method: "PUT",
     headers: {

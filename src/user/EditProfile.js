@@ -59,12 +59,17 @@ class EditProfile extends Component {
           if (data.error) {
             this.setState({ error: data.error });
           } else {
+            const { name, email, about } = this.state;
+            const user = { name, email, about };
+            if (typeof window !== "undefined") {
+              if (localStorage.getItem("jwt")) {
+                let auth = JSON.parse(localStorage.getItem("jwt"));
+                Object.assign(auth.userRes, user);
+                localStorage.setItem("jwt", JSON.stringify(auth));
+              }
+            }
+
             this.setState({
-              error: "",
-              email: "",
-              password: "",
-              name: "",
-              about: "",
               redirectToProfile: true,
             });
           }
