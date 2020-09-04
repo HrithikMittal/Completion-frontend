@@ -115,3 +115,33 @@ export const update = (userId, user) => {
     return response.json();
   });
 };
+
+export const follow = (userId, followId) => {
+  const token = isAuthenticated().token;
+  return fetch(`${process.env.REACT_APP_API_URL}/user/follow`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId, followId }),
+  }).then((response) => {
+    return response.json();
+  });
+};
+
+export const unfollow = (userId, followId) => {
+  const token = isAuthenticated().token;
+  return fetch(`${process.env.REACT_APP_API_URL}/user/unfollow`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId, followId }),
+  }).then((response) => {
+    return response.json();
+  });
+};

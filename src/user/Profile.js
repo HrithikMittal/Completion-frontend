@@ -10,6 +10,7 @@ class Profile extends Component {
     user: { following: [], followers: [] },
     redirectToSignin: false,
     following: false,
+    error: "",
   };
 
   checkFollow = (user) => {
@@ -37,6 +38,17 @@ class Profile extends Component {
         console.log("ERROR is ", err);
       });
   }
+
+  clickFollowButton = (callApi) => {
+    const userId = isAuthenticated().userRes._id;
+    callApi(userId, this.state.user._id).then((data) => {
+      if (data.error) {
+        this.setState({ error: data.error });
+      } else {
+        this.setState({ user: data, following: !this.state.following });
+      }
+    });
+  };
 
   componentWillReceiveProps(props) {
     const userId = this.props.match.params.userId;
@@ -100,7 +112,10 @@ class Profile extends Component {
                 <DeleteUser userId={this.state.user._id} />
               </div>
             ) : (
-              <FollowProfileButton following={this.state.following} />
+              <FollowProfileButton
+                following={this.state.following}
+                onButtonClick={this.clickFollowButton}
+              />
             )}
           </div>
         </div>
