@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { fetchProfile, update } from "../auth/index";
 import { Redirect } from "react-router-dom";
+import DefaultProfile from "../images/avatar.png";
 
 class EditProfile extends Component {
   state = {
@@ -94,6 +95,10 @@ class EditProfile extends Component {
       return <Redirect to={`/user/${this.state.id}`} />;
     }
 
+    var photoUrl = this.state.id
+      ? `${process.env.REACT_APP_API_URL}/user/photo/${this.state.id}`
+      : DefaultProfile;
+
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
@@ -115,6 +120,7 @@ class EditProfile extends Component {
             <p>Loading</p>
           </div>
         )}
+        <img src={photoUrl} alt={this.state.name} />
 
         <form>
           <div className="form-group">
