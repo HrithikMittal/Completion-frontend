@@ -8,6 +8,7 @@ class EditProfile extends Component {
     id: "",
     name: "",
     email: "",
+    about: "",
     password: "",
     error: "",
     redirectToProfile: false,
@@ -29,7 +30,12 @@ class EditProfile extends Component {
         if (data.error) {
           this.setState({ redirectToSignin: true });
         } else {
-          this.setState({ id: data._id, name: data.name, email: data.email });
+          this.setState({
+            id: data._id,
+            name: data.name,
+            email: data.email,
+            about: data.about,
+          });
         }
       })
       .catch((err) => {
@@ -48,7 +54,6 @@ class EditProfile extends Component {
     this.setState({ loading: true });
     if (this.isValid()) {
       const { id } = this.state;
-
       update(id, this.userData)
         .then((data) => {
           if (data.error) {
@@ -59,6 +64,7 @@ class EditProfile extends Component {
               email: "",
               password: "",
               name: "",
+              about: "",
               redirectToProfile: true,
             });
           }
@@ -70,7 +76,7 @@ class EditProfile extends Component {
   };
 
   isValid = () => {
-    const { name, email, password, fileSize } = this.state;
+    const { name, email, password, fileSize, about } = this.state;
     if (name.length === 0) {
       this.setState({ error: "Name is required" });
       return false;
@@ -157,6 +163,15 @@ class EditProfile extends Component {
               onChange={this.handleChange("email")}
               value={this.state.email}
             ></input>
+          </div>
+          <div className="form-group">
+            <lable className="text-muted">About</lable>
+            <textarea
+              type="text"
+              className="form-control"
+              onChange={this.handleChange("about")}
+              value={this.state.about}
+            ></textarea>
           </div>
           <div className="form-group">
             <lable className="text-muted">Password</lable>

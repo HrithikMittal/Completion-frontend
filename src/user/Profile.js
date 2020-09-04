@@ -75,6 +75,7 @@ class Profile extends Component {
               <p>
                 Joined on: {new Date(this.state.user.created).toDateString()}
               </p>
+              <p>About me: {this.state.user.about}</p>
             </div>
             {isAuthenticated().userRes &&
               isAuthenticated().userRes._id === this.state.user._id && (

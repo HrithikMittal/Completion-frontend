@@ -41,6 +41,8 @@ class AllUsers extends Component {
               <div className="card-body">
                 <h5 className="card-title">{user.name}</h5>
                 <p className="card-text">{user.email}</p>
+
+                <p>{user.about}</p>
                 <Link to={url} className="btn btn-primary btn-raised btn-small">
                   View Profile
                 </Link>

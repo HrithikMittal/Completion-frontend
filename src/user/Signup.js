@@ -5,6 +5,7 @@ class Signup extends Component {
   state = {
     name: "",
     email: "",
+    about: "",
     password: "",
     error: "",
     open: false,
@@ -85,6 +86,15 @@ class Signup extends Component {
               onChange={this.handleChange("password")}
               value={this.state.password}
             ></input>
+          </div>
+          <div className="form-group">
+            <lable className="text-muted">About</lable>
+            <textarea
+              type="text"
+              className="form-control"
+              onChange={this.handleChange("about")}
+              value={this.state.about}
+            ></textarea>
           </div>
           <button
             className="btn btn-raised btn-primary"
